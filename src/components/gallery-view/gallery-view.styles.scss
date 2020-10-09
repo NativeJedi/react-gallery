@@ -1,0 +1,19 @@
+.gallery-view {
+  &__footer {
+    padding: 10px 15px;
+  }
+
+  &__label {
+    display: inline-block;
+    font-weight: 500;
+    margin-right: 5px;
+  }
+
+  &__img-wrap {
+    height: 500px;
+    min-width: 500px;
+    img {
+      height: 100%;
+    }
+  }
+}

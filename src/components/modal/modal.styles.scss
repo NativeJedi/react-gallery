@@ -1,0 +1,40 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(#000, 0.5);
+
+  &__window {
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__control {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    color: #fff;
+    font-size: 40px;
+
+    &--next {
+      right: -50px;
+    }
+
+    &--prev {
+      left: -50px;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    right: -40px;
+    top: 0;
+    color: #fff;
+    font-size: 30px;
+  }
+}
