@@ -1,25 +1,26 @@
 import axios from 'axios';
 import config from '../config';
-import { loadToken } from './requests';
 
 const api = axios.create({
   baseURL: config.API_BASE_URL,
 });
 
+const loadToken = () => api.post('/auth', {
+  apiKey: config.API_KEY,
+});
 
-try {
+const refreshToken = async () => {
+  const { token } = await loadToken();
 
-} catch (e) {
-  console.log(e);
-}
+  localStorage.setItem('token', token);
+
+  return token;
+};
+
 api.interceptors.request.use(async (axiosConfig) => {
-  let token = localStorage.getItem('token');
+  const localToken = localStorage.getItem('token');
 
-  if (!token) {
-    const { token: refreshedToken } = await loadToken();
-    token = refreshedToken;
-    localStorage.setItem('token', refreshedToken);
-  }
+  const token = localToken || await refreshToken();
 
   return {
     ...axiosConfig,
@@ -30,6 +31,23 @@ api.interceptors.request.use(async (axiosConfig) => {
   };
 });
 
-api.interceptors.response.use(({ data }) => data);
+api.interceptors.response.use(
+  ({ data }) => data,
+  async (error) => {
+    const { config: originalRequest, response } = error;
+
+    if (response.status === 401) {
+      try {
+        await refreshToken();
+      } catch (e) {
+        return e;
+      }
+
+      return api(originalRequest);
+    }
+
+    return error;
+  },
+);
 
 export default api;

@@ -1,0 +1,20 @@
+.react-transform-element, .react-transform-component {
+  height: unset;
+  max-width: 100%;
+}
+
+.gallery-zoom-tools {
+  padding: 15px 0;
+}
+
+.gallery-zoom-wrapper {
+  height: 500px;
+  text-align: center;
+  @media only screen and (max-width: 767px) {
+    height: auto;
+  }
+  img {
+    max-height: 100%;
+    max-width: 100%;
+  }
+}
