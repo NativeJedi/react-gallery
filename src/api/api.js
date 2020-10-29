@@ -1,18 +1,26 @@
 import axios from 'axios';
 import config from '../config';
 
-const api = axios.create({
+const apiConfig = {
   baseURL: config.API_BASE_URL,
-});
+};
 
-const loadToken = () => api.post('/auth', {
-  apiKey: config.API_KEY,
-});
+const loadToken = async () => {
+  const { data } = await axios.post('/auth', {
+    apiKey: config.API_KEY,
+  }, apiConfig);
+
+  return data.token;
+};
+
+const api = axios.create(apiConfig);
 
 const refreshToken = async () => {
-  const { token } = await loadToken();
+  const token = await loadToken();
 
-  localStorage.setItem('token', token);
+  if (token) {
+    localStorage.setItem('token', token);
+  }
 
   return token;
 };
