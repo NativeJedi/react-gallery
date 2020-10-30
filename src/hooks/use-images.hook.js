@@ -17,12 +17,13 @@ const useImages = (loaderRef) => {
   const handleObserve = (entries) => {
     const [loaderElem] = entries;
     const { y } = loaderElem.boundingClientRect;
-
-    const isScrolledDown = y > prevY;
+    const { pageYOffset } = window;
+    const currentOffset = y + pageYOffset;
+    const isScrolledDown = currentOffset > prevY;
 
     if (loaderElem.isIntersecting && isScrolledDown) {
       loadMore();
-      setPrevY(y);
+      setPrevY(currentOffset);
     }
   };
 
@@ -55,7 +56,7 @@ const useImages = (loaderRef) => {
     setObserve(loaderRef.current);
 
     return unobserve;
-  }, [isAllLoaded]);
+  }, [isAllLoaded, loaderRef, setObserve, removeObserve]);
 
   return [images, isAllLoaded, loadMore];
 };
