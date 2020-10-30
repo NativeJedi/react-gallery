@@ -1,4 +1,4 @@
-const useObserver = (options, observeCallback) => {
+const setObserver = (options, observeCallback) => {
   const observer = new IntersectionObserver(
     observeCallback,
     options,
@@ -11,4 +11,4 @@ const useObserver = (options, observeCallback) => {
   return [setObserve, removeObserve];
 };
 
-export default useObserver;
+export default setObserver;

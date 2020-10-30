@@ -4,7 +4,7 @@ import {
   useCallback,
 } from 'react';
 import { getImages } from '../api/requests';
-import useObserver from './use-observer.hook';
+import setObserver from '../utils/set-observer.util';
 
 const useImages = (loaderRef) => {
   const [currentPage, setPage] = useState(1);
@@ -27,7 +27,7 @@ const useImages = (loaderRef) => {
     }
   };
 
-  const [setObserve, removeObserve] = useObserver({
+  const [setObserve, removeObserve] = setObserver({
     root: null,
     rootMargin: '400px',
     threshold: 1.0,
